@@ -1,0 +1,79 @@
+# SmartSort — Target Class Definitions
+# 3-class system: Recyclable | Organic | General Waste
+
+target_classes:
+  0: Recyclable
+  1: Organic
+  2: General Waste
+
+# Keywords used by merge_datasets.py to auto-map source dataset classes → target class.
+# Matching is case-insensitive substring search on the source class name.
+# On a tie (multiple categories match), the longest matching keyword wins.
+subclass_keywords:
+  Recyclable:
+    - glass
+    - metal
+    - paper
+    - plastic
+    - cardboard
+    - can
+    - bottle
+    - foil
+    - aluminium
+    - corrugated
+    - carton
+    - cup
+    - cap
+    - lid
+    - straw
+    - styrofoam
+    - foam
+
+  Organic:
+    - apple
+    - bone
+    - bread
+    - bun
+    - egg
+    - fish
+    - meat
+    - mussel
+    - noodle
+    - orange
+    - pancake
+    - pasta
+    - pear
+    - potato
+    - rice
+    - shrimp
+    - tofu
+    - tomato
+    - vegetable
+    - fruit
+    - food
+    - peel
+    - shell
+    - core
+    - yolk
+    - scramble
+    - steam
+    - hard
+
+  General Waste:
+    - waste
+    - garbage
+    - trash
+    - bag
+    - wrapper
+    - packaging
+    - container
+    - other
+    - disposable
+    - crisp
+
+# Source classes to explicitly SKIP (not garbage, or too ambiguous to map).
+skip_classes:
+  - person
+  - hand
+  - background
+  - unlabeled
