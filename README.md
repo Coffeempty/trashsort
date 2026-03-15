@@ -1,7 +1,8 @@
 # SmartSort — Setup Guide
 
 Real-time garbage classification into **Recyclable**, **Organic**, and **General Waste**
-using YOLO11 detection on an NVIDIA RTX 3050 Ti (4 GB VRAM).
+using YOLO11 detection
+
 
 ---
 
