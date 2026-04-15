@@ -22,6 +22,7 @@ from pathlib import Path
 # ── Paths ─────────────────────────────────────────────────────────────────────────
 SCRIPT_DIR = Path(__file__).resolve().parent
 SMARTSORT_DIR = SCRIPT_DIR.parent
+PROJECT_ROOT = SMARTSORT_DIR.parent           # trashsort/
 LOGS_DIR = SMARTSORT_DIR / "logs"
 MODELS_DIR = SMARTSORT_DIR / "models"
 DEFAULT_CONFIG = SMARTSORT_DIR / "configs" / "train_config.yaml"
@@ -680,7 +681,14 @@ def main() -> None:
         else:
             logger.warning("--resume requested but models/last.pt not found. Starting fresh.")
 
-    data_yaml = cfg.get("data", str(SMARTSORT_DIR.parent / "merged_dataset" / "dataset.yaml"))
+    # Resolve relative paths in config against the project root (trashsort/)
+    raw_data = cfg.get("data", "merged_dataset/dataset.yaml")
+    data_yaml = str((PROJECT_ROOT / raw_data).resolve()) if not Path(raw_data).is_absolute() else raw_data
+    cfg["data"] = data_yaml   # pass the resolved absolute path to YOLO
+
+    raw_project = cfg.get("project", "smartsort/runs")
+    if raw_project and not Path(raw_project).is_absolute():
+        cfg["project"] = str((PROJECT_ROOT / raw_project).resolve())
 
     # ── Class weights ─────────────────────────────────────────────────────────────
     labels_train_dir = Path(data_yaml).parent / "labels" / "train"
